@@ -1,9 +1,4 @@
 {
-  "scripts": {
-    "build": "[my-framework] build --output public"
-  }
-}
-{
   "dependencies": {
     "normalize-package-data": "*"
   }
