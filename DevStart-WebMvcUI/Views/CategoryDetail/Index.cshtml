@@ -1,0 +1,45 @@
+﻿@model List<CourseViewModel>
+@{
+    ViewData["Title"] = "CategoryDetail";
+    Layout = "~/Views/Shared/_LayoutDevStart.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="course-box">
+                    <div class="course-content">
+                        <div class="course-img">
+                            <img src="@item.PictureUrl" alt="Kategori resmi">
+                        </div>
+                        <h3>
+                            
+                                @item.CourseTitle
+                            
+                            
+                        </h3>
+                        <div>
+                            
+                                @item.CourseDescription
+                            
+                            
+                        </div>
+                        @* <div class="author-info">
+                            
+                                <a href="/CourseDetail/Index/@item.CourseId" class="author-name">Kursa ait dersler...</a>
+
+                                                       
+                        </div> *@
+                        <form action="@Url.Action("Add", "Cart")" method="post">
+                            <input type="hidden" name="courseId" value="@item.CourseId" />
+                            <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

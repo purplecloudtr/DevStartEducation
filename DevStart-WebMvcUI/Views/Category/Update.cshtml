@@ -1,0 +1,44 @@
+﻿@model CategoryViewModel
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Update</h2>
+
+<h4>CategoryViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update" asp-controller="Category" method="Post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>   
+            <input type="hidden" name="CategoryId" asp-for="@Model.CategoryId" class="form-control" />            
+            <div class="form-group">
+                <label asp-for="@Model.CategoryName" class="control-label"></label>
+                <input name="CategoryName" asp-for="@Model.CategoryName" class="form-control" />
+                <span asp-validation-for="@Model.CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.CategoryDescription" class="control-label"></label>
+                <input name="CategoryDescription" asp-for="@Model.CategoryDescription" class="form-control" />
+                <span asp-validation-for="@Model.CategoryDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input name="CategoryState" asp-for="@Model.CategoryState" /> @Html.DisplayNameFor(model => model.CategoryState)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

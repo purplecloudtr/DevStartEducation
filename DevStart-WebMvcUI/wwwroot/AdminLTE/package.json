@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "normalize-package-data": "*",
+    "npm": "*",
+    "package-json": "*"
+  }
+}

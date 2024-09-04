@@ -1,0 +1,43 @@
+﻿@model List<CourseViewModel>
+@{
+    ViewData["Title"] = "Kurslarım";
+    Layout = "~/Views/Shared/_LayoutDevStart.cshtml";
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurs Kutuları</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="course-box">
+                        <div class="course-content">
+                            <div class="course-img">
+                                <img src="@item.PictureUrl" alt="Kategori resmi">
+                            </div>
+                            <h3>
+                                <a href="/CourseDetail/Index/@item.CourseId">@item.CourseTitle</a>
+                            </h3>
+                            <div>
+                                <a href="/CourseDetail/Index/@item.CourseId">@item.CourseDescription</a>
+                            </div>
+                            <div class="author-info">
+                                <a href="/CourseDetail/Index/@item.CourseId" class="author-name">Kursa ait dersler...</a>
+                            </div>
+                            <form action="@Url.Action("Add", "Cart")" method="post">
+                                <input type="hidden" name="courseId" value="@item.CourseId" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

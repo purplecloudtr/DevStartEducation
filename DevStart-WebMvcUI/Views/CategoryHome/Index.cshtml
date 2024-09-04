@@ -1,0 +1,40 @@
+﻿@model List<CategoryViewModel>
+@{
+    ViewData["Title"] = "Tüm Kategoriler";
+    Layout = "~/Views/Shared/_LayoutDevStart.cshtml";
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategoriler</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="course-box">
+                        <div class="course-content">
+                            <div class="course-img">
+                                <img src="~/images/1.jpg" alt="Kategori resmi">
+                            </div>
+                            <h3>
+                                @item.CategoryName
+                            </h3>
+                            <div>
+                                @item.CategoryDescription
+                            </div>
+                            <div class="author-info">
+                                <a href="/CategoryDetail/Index/@item.CategoryId" class="author-name">Kategoriye ait dersler...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

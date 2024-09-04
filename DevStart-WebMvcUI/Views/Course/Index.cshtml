@@ -1,0 +1,108 @@
+﻿@model (CourseViewModel, IEnumerable<CourseViewModel>)
+@{
+    Layout = "_AdminLayout";
+    
+}
+<div class="col-md-6">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Yeni Kurs Oluşturma</h3>
+            <div>
+                @if (@TempData["message1"] != null)
+                {
+                    <p>@TempData["message2"]</p>
+                }
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form asp-action="Index" asp-controller="Course" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Item1.CourseTitle" class="control-label"></label>
+                <input asp-for="@Model.Item1.CourseTitle" name="CourseTitle" class="form-control" />
+                <span asp-validation-for="@Model.Item1.CourseTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Item1.CourseDescription" class="control-label"></label>
+                <input asp-for="@Model.Item1.CourseDescription" name="CourseDescription" class="form-control" />
+                <span asp-validation-for="@Model.Item1.CourseDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Item1.CoursePrice" class="control-label"></label>
+                <input asp-for="@Model.Item1.CoursePrice" name="CoursePrice" class="form-control" />
+                <span asp-validation-for="@Model.Item1.CoursePrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Item1.CourseCreateDate" class="control-label"></label>
+                <input asp-for="@Model.Item1.CourseCreateDate" name="CourseCreateDate" class="form-control" />
+                <span asp-validation-for="@Model.Item1.CourseCreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Item1.PictureUrl" class="control-label"></label>
+                <input type="file" asp-for="@Model.Item1.PictureUrl" name="PictureUrl" class="form-control" />
+                <span asp-validation-for="@Model.Item1.PictureUrl" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label class="control-label">Kategoriler</label>
+                <select id="CategoryId" name="CategoryId" class="form-control" asp-items="@ViewBag.Categories">
+                    <option selected disable>Kategori seçiniz</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+    <!-- /.box -->
+</div>
+<div class="col-md-6">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Kurs Listesi</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Kurs Başlığı</th>
+                        <th>Kurs Açıklaması</th>
+                        <th>Kurs Ücreti</th>
+                        <th>Kurs Eklenme Tarihi</th>
+                        <th>Kurs Resmi</th>
+                        @* <th>Kurs Kategorisi</th> *@
+                        <th></th>                        
+                    </tr>
+                </thead>
+                <tbody>                   
+                        @foreach (var item in Model.Item2)
+                        {
+                            <tr>
+                                <td>@item.CourseTitle</td>
+                                <td>@item.CourseDescription</td>
+                                <td>@item.CoursePrice</td>
+                                <td>@item.CourseCreateDate</td>
+                                <td><img src="@item.PictureUrl" width ="30" height="30"/></td>
+                                @* <td>@item.CategoryId</td>  *@                           
+                                <td>
+                                <form asp-action="Update" asp-controller="Course" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="courseId" value="@item.CourseId" />
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </form>
+
+                                <form asp-action="Delete" asp-controller="Course" method="post" onsubmit="return confirm('Silmek İstiyor musunuz?')">
+                                    <input type="hidden" name="courseId" value="@item.CourseId" />
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                                </td>
+                            </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>

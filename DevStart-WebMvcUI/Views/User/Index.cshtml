@@ -1,0 +1,132 @@
+﻿@model (List<UserViewModel>, List<RoleViewModel>);
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Kullanıcı Yetkilendirme";
+}
+@*
+<div class="col-md-6">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Yeni Kullanıcı</h3>
+            <div>
+                @if (@TempData["message1"] != null)
+                {
+                    <p>@TempData["message2"]</p>
+                }
+            </div>
+        </div>
+        <!-- /.box-header -->
+         <!-- form start -->
+        <form role="form" asp-action="Register" asp-controller="User" method="post">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="FirstName">Ad</label>
+                    <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="İsim giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="LastName">Soyad</label>
+                    <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Soyadı giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="UserName">Kullanıcı Adı</label>
+                    <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Kullanıcı ismi giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="PhoneNumber">Telefon</label>
+                    <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Telefon giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" placeholder="Mail giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="Password">Parola</label>
+                    <input type="password" class="form-control" id="Password" name="Password" placeholder="Parola giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="ConfirmPassword">Parola Tekrar</label>
+                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Parolanızı tekrar giriniz">
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.box -->
+		</div> *@
+<div class="col-md-8">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Kullanıcı Listesi</h3>
+            <div>
+                @if (@TempData["message1"] != null)
+                {
+                    <p>@TempData["message2"]</p>
+                }
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="example1" class="example table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Kullanıcı Adı</th>
+                        <th>Telefon</th>
+                        <th>Email</th>
+                        <th>Yetkisi</th>
+                        <th>Yetki Değişimi</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Item1)
+                    {
+                        <tr>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName </td>
+                            <td>@item.UserName</td>
+                            <td>@item.PhoneNumber</td>
+                            <td>@item.Email</td>
+                            <td>@item.RoleName</td>
+                            
+                            <td>
+                                <select class="form-control role-select" data-user-id="@item.Id">
+                                    <option value="">-- Lütfen bir seçim yapın --</option>
+                                    @foreach (var item1 in Model.Item2)
+                                    {
+                                        <option value="@item1.Id">@item1.Name</option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary assign-role-btn">
+                                    <i class="ri-paypal-line me-1"></i> Yetki Onayı
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const roleSelects = document.querySelectorAll('.role-select');
+        roleSelects.forEach(select => {
+            select.addEventListener('change', function () {
+                const userId = this.getAttribute('data-user-id');
+                const roleId = this.value;
+                const assignRoleBtn = this.closest('tr').querySelector('.assign-role-btn');
+                assignRoleBtn.href = `/User/AssignRoleToUser?userId=${userId}&roleId=${roleId}`;
+            });
+        });
+    });
+</script>

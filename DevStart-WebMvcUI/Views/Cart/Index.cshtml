@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CartItem>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutDevStart.cshtml";
+}
+
+<h2>Sepetim</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Başlık</th>
+            <th>Miktar</th>
+            <th>Fiyat</th>
+            <th>Toplam</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CourseTitle</td>
+                <td>@item.CourseQuantity</td>
+                <td>@item.CoursePrice</td>
+                <td>@(item.CourseQuantity * item.CoursePrice)</td>
+                <td>
+                    <a href="@Url.Action("Delete", "Cart", new { courseId = item.CourseId })" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <strong>Toplam Adet:</strong> @TempData["ToplamAdet"]
+    <br />
+    <strong>Toplam Tutar:</strong> @TempData["ToplamTutar"]
+</div>
+
+<div class="mt-3">
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Alışverişe Devam Et</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (Convert.ToInt16(@TempData["ToplamAdet"].ToString()) > 0)
+        {
+            <a href="@Url.Action("Checkout", "Cart")" class="btn btn-success">Alışverişi Tamamla</a>
+            <a href="@Url.Action("DeleteCart", "Cart")" class="btn btn-warning">Sepeti Boşalt</a>
+        }
+
+    }
+    else
+    {
+        <a href="/Account/Login" class="btn btn-success">Giriş Yapmalısınız</a>
+    }
+
+
+    
+</div>

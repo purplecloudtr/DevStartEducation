@@ -1,0 +1,35 @@
+﻿@model List<LessonViewModel>
+@{
+    ViewData["Title"] = "CourseDetail";
+    Layout = "~/Views/Shared/_LayoutDevStart.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="course-box">
+                    <div class="course-content">
+                        <div class="course-img">
+                            <video width="320" height="240" controls>
+                                <source src="@item.VideoLink" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <h3>
+                            <a href="course-details.html">@item.LessonTitle</a>
+                        </h3>                        
+                        <div class="author-info">
+                           <a href="/CourseDetail/Index/@item.CourseId" class="author-name"></a>
+                        </div>
+                        <div>
+                           <a href="course-details.html">@item.LessonContent</a>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            
+        }
+    </div>
+</div>

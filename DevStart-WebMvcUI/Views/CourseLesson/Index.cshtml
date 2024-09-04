@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CourseViewModel>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Kurs-Ders Listesi";
+
+}
+<style>
+    tbody tr:hover {
+        background-color: green;
+        color:white;
+        cursor: pointer;
+    }
+</style>
+
+<div class="col-md-6">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Kurs Listesi</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="example1" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Kurs Başlığı</th>
+                        <th>Kurs Açıklaması</th>
+                        <th>Kurs Ücreti</th>
+                        <th>Kurs Eklenme Tarihi</th>
+                        <th>Kurs Resmi</th>
+                        <th>Kurs Kategorisi</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="TBodyList">
+                    @foreach (var item in Model)
+                    {
+                        <tr data-course-id="@item.CourseId" data-course-title="@item.CourseTitle">
+                            <td>@item.CourseTitle</td>
+                            <td>@item.CourseDescription</td>
+                            <td>@item.CoursePrice</td>
+                            <td>@item.CourseCreateDate</td>
+                            <td><img src="@item.PictureUrl" width="30" height="30" /></td>
+                            <td>@item.CategoryId</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="box">
+        <div class="box-header">
+            <h3 id="CTitle" class="box-title">Ders Listesi</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Ders Başlığı</th>
+                        <th>Ders Açıklaması</th>
+                        <th>Video Link</th>
+                    </tr>
+                </thead>
+                <tbody id="TBody">
+                    
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#TBodyList tr").click(function () {
+            var courseId = $(this).data("course-id");
+            $("#CTitle").html("Ders Listesi - " + $(this).data("course-title"))
+            $.ajax({
+                type: "POST",
+                url: "/CourseLesson/GetLesson", // Değiştirmeniz gereken yer
+                data: { courseId: courseId },
+                dataType: "json", // Sunucudan JSON veri beklediğimizi belirtiyoruz
+                success: function (response) {
+                    var _html = "";
+                    for (var i = 0; i < response.length; i++) {
+                        _html += "<tr>";
+                        _html += "<td>" + response[i].lessonTitle + "</td>";
+                        _html += "<td>" + response[i].lessonDescription + "</td>";
+                        _html += "<td>" + response[i].lessonVideoLink + "</td>";
+                        _html += "</tr>";
+                    }
+                    $("#TBody").html(_html);
+                },
+                error: function () {
+                    alert("Bir hata oluştu!");
+                }
+            });
+        });
+    });
+</script>

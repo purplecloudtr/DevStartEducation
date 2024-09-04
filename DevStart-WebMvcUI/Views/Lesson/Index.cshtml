@@ -1,0 +1,50 @@
+﻿@model LessonViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Yeni Ders Oluşturma</h3>
+            <div>
+                @if (@TempData["message1"] != null)
+                {
+                    <p>@TempData["message2"]</p>
+                }
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" asp-action="Index" asp-controller="Lesson" method="post" enctype="multipart/form-data">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="LessonTitle">Ders Başlık</label>
+                    <input type="text" class="form-control" id="LessonTitle" name="LessonTitle" placeholder="Ders ismi giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="LessonContent">Ders Hakkında Bilgi</label>
+                    <input type="text" class="form-control" id="LessonContent" name="LessonContent" placeholder="Ders açıklaması giriniz">
+                </div>
+                <div class="form-group">
+                    <label asp-for="VideoLink" class="control-label"></label>
+                    <input type="file" asp-for="VideoLink" name="VideoLink" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Kurslar</label>
+                    <select id="CourseId" name="CourseId" class="form-control" asp-items="@ViewBag.Courses">
+                        <option selected disable>Kurs seçiniz</option>
+                    </select>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.box -->
+</div>
+

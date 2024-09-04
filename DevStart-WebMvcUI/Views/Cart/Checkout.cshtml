@@ -1,0 +1,34 @@
+﻿@model List<CartItem>
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_LayoutDevStart.cshtml";
+}
+<h2>Ödeme Bilgileri</h2>
+
+<form method="post" asp-action="Checkout" asp-controller="Cart">
+    <div class="form-group">
+        <label for="CardName">Kart Üzerindeki İsim</label>
+        <input type="text" class="form-control" id="CardName" name="CardName" />
+    </div>
+
+    <div class="form-group">
+        <label for="CardNumber">Kart Numarası</label>
+        <input type="text" class="form-control" id="CardNumber" name="CardNumber"  />
+    </div>
+
+    <div class="form-group">
+        <label for="ExpirationDate">Son Kullanma Tarihi</label>
+        <input type="text" class="form-control" id="ExpirationDate" name="ExpirationDate" placeholder="MM/YY"  />
+    </div>
+
+    <div class="form-group">
+        <label for="CVC">CVC</label>
+        <input type="text" class="form-control" id="CVC" name="CVC"  />
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Ödeme Yap</button>
+        <a href="@Url.Action("Index", "Cart")" class="btn btn-secondary">İptal</a>
+    </div>
+</form>
